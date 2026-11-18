@@ -350,6 +350,20 @@ body.intro header.top>*{opacity:0}
 body.intro.bar header.top>:not(.brand){animation:fadeIn .45s ease .35s both}
 body.intro .view.entering .hero,body.intro .view.entering .banner,body.intro .view.entering .card,body.intro .view.entering .buy,body.intro .view.entering .stack,body.intro .view.entering .step,body.intro .view.entering .listing,body.intro .view.entering .gcard,body.intro .view.entering section,body.intro .view.entering .scope,body.intro .view.entering .tools{animation-delay:calc(2.45s + var(--i,0) * 70ms)}
 body.intro .fab{animation-delay:2.9s}
+/* floating demo notice (lower left) */
+.democard{position:fixed;left:20px;bottom:20px;z-index:59;max-width:300px;animation:fabIn .6s cubic-bezier(.2,.8,.2,1) .35s both}
+body.intro .democard{animation-delay:3s}
+.dc-body,.dc-pill{background:linear-gradient(140deg,var(--glass-a),var(--glass-b));-webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);
+  border:1px solid var(--line);box-shadow:0 12px 34px rgba(20,60,35,.2),0 1px 0 rgba(255,255,255,.85) inset}
+.dc-body{background:linear-gradient(140deg,rgba(255,255,255,.8),rgba(255,255,255,.48))!important;-webkit-backdrop-filter:blur(24px) saturate(160%)!important;backdrop-filter:blur(24px) saturate(160%)!important;border-radius:22px;padding:12px 14px 12px;display:grid;gap:6px;font-size:.78rem;line-height:1.45}
+.dc-body p{margin:0}.dc-note{color:var(--muted);font-size:.72rem}
+.dc-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.dc-badge{display:inline-flex;align-items:center;gap:7px;font-family:var(--head);font-weight:700;font-size:.8rem}
+.dc-dot{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 3px rgba(140,196,60,.25);flex:none}
+.dc-min{appearance:none;border:1px solid var(--line);background:rgba(255,255,255,.55);width:24px;height:24px;border-radius:50%;cursor:pointer;font:inherit;font-weight:700;line-height:1;color:var(--muted)}
+.dc-pill{display:none;appearance:none;font:inherit;font-size:.76rem;font-weight:700;color:var(--ink);align-items:center;gap:7px;padding:9px 14px;border-radius:999px;cursor:pointer}
+.democard.min .dc-body{display:none}.democard.min .dc-pill{display:inline-flex}
+@media (max-width:900px){.democard{left:12px;bottom:12px;max-width:min(300px,calc(100vw - 24px))}.democard:not(.min){bottom:128px;z-index:62}}
 /* floating lab account card */
 .labcard{position:fixed;right:20px;bottom:86px;z-index:61;display:grid;justify-items:end;gap:8px;animation:fabIn .6s cubic-bezier(.2,.8,.2,1) .2s both}
 body.intro .labcard{animation-delay:2.8s}
@@ -683,6 +697,14 @@ body.intro .labcard{animation-delay:2.8s}
 </div>
 
 </main>
+<aside class="democard" id="democard" aria-label="About this demo">
+  <button class="dc-pill" id="dc-pill" aria-expanded="true" aria-controls="dc-body"><span class="dc-dot"></span>Demo</button>
+  <div class="dc-body" id="dc-body">
+    <div class="dc-top"><span class="dc-badge"><span class="dc-dot"></span>Student project demo</span><button class="dc-min" id="dc-min" aria-label="Minimise">–</button></div>
+    <p>Built for the <b>Sustainability Tools and Fundamentals</b> course, College of Science and Engineering (CSE), Hamad Bin Khalifa University.</p>
+    <p class="dc-note">Figures, labs and contacts are illustrative placeholders.</p>
+  </div>
+</aside>
 <div class="labcard" id="labcard">
   <div class="lc-pop" id="lc-pop" hidden>
     <div class="lc-step" id="lc-list">
@@ -711,7 +733,7 @@ body.intro .labcard{animation-delay:2.8s}
   <button data-fab="exchange" class="alt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h11l-3-3M17 17H6l3 3"/></svg>Exchange</button>
 </div>
 <footer>
-  LabLoop · Sample build for Sustainability Fundamentals and Tools, HBKU · Lab-level data is visible only to that lab; institute views are aggregated and anonymized. Demo data is illustrative, grounded in the October 2026 needs assessment.<div class="credits">Photos from Unsplash (free to use): Brecht Corbeel, Pawan Parihar, Hans Reniers, Yosuke Ota, Siwawut Phoophinyo.</div><button class="reset" id="reset-btn">Reset demo data</button>
+  LabLoop · Student project demo for Sustainability Tools and Fundamentals, College of Science and Engineering (CSE), HBKU · Lab-level data is visible only to that lab; institute views are aggregated and anonymized. Demo data is illustrative, grounded in the October 2026 needs assessment.<div class="credits">Photos from Unsplash (free to use): Brecht Corbeel, Pawan Parihar, Hans Reniers, Yosuke Ota, Siwawut Phoophinyo.</div><button class="reset" id="reset-btn">Reset demo data</button>
 </footer>
 
 <dialog id="emg-dlg">
@@ -1258,6 +1280,12 @@ document.getElementById("lc-sign").addEventListener("submit",e=>{
 document.addEventListener("click",e=>{if(!lcPop.hidden&&!e.target.closest("#labcard"))openPop(false);});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!lcPop.hidden)openPop(false);});
 renderLab();
+// demo notice: open on desktop, minimised to a pill on small screens; remembers the choice
+(()=>{const dc=document.getElementById("democard");let m=null;try{m=localStorage.getItem("labloop-demo-min")}catch(e){}
+  const set=v=>{dc.classList.toggle("min",v);document.getElementById("dc-pill").setAttribute("aria-expanded",String(!v));try{localStorage.setItem("labloop-demo-min",v?"1":"0")}catch(e){}};
+  dc.classList.toggle("min",m===null?innerWidth<900:m==="1");
+  document.getElementById("dc-min").addEventListener("click",()=>set(true));
+  document.getElementById("dc-pill").addEventListener("click",()=>set(false));})();
 document.getElementById("fab").addEventListener("click",e=>{const b=e.target.closest("button[data-fab]");if(b)show(b.dataset.fab);});
 document.querySelectorAll("#fab button").forEach(b=>b.hidden=b.dataset.fab===(document.querySelector(".view.active").id.slice(2)));
 const INTRO=!REDUCED&&!sessionStorageGet("cre-intro");
