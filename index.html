@@ -313,6 +313,14 @@ body.intro .display .l1{animation-delay:2.5s}body.intro .display em{animation-de
 .scope::before{background:var(--reuse)}
 .tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
 .tools .search{flex:1 1 240px;margin:0}
+#board-seg button b{font-size:.68rem;min-width:18px;padding:1px 6px;border-radius:999px;background:var(--reuse-soft);color:var(--reuse)}
+.listing.want .pic{border-style:dashed;border-width:1.5px;border-color:color-mix(in srgb,var(--pc) 45%,transparent)}
+.listing.flash{animation:pop .6s ease;outline:2px solid var(--reuse);outline-offset:2px}
+.fill-note{display:none;font-size:.82rem;padding:10px 14px;border-radius:14px;background:var(--reuse-soft);color:var(--ink);margin:0 0 12px}
+.fill-note.show{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.fill-note .linklike{margin-left:auto}
+.want-hits{margin-top:0}
+.want-hits:empty{display:none}
 form.offer{display:none;border-radius:var(--r);padding:18px;margin-bottom:14px}
 form.offer.show{display:block;animation:rise .45s cubic-bezier(.2,.8,.2,1)}
 .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -337,7 +345,13 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}
 th,td{text-align:left;padding:8px 10px 8px 0;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-size:.74rem;color:var(--muted);font-weight:600}
 .tool-k{font-size:.7rem;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.05em}
-.loop{width:100%;height:auto;max-width:520px;display:block;margin:6px auto 0}
+.gcard .co2{font-size:.76rem;color:var(--reuse);margin-top:6px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}
+.gcard .co2 span{white-space:nowrap}
+.src{display:block;margin-top:6px;font-size:.75rem;color:var(--muted);line-height:1.45}
+.src a{color:var(--brand)}
+.ftab{display:grid;grid-template-columns:auto auto auto;gap:2px 14px;margin-top:8px;font-size:.76rem;width:fit-content;max-width:100%}
+.ftab b{font-weight:600;color:var(--muted)}
+.ftab span:nth-child(3n+2),.ftab span:nth-child(3n),.ftab b:nth-child(3n+2),.ftab b:nth-child(3n){text-align:right;font-variant-numeric:tabular-nums}
 .rep-out{white-space:pre-wrap;font-size:.88rem;margin-top:12px;display:none;border-top:1px solid var(--line);padding-top:12px;line-height:1.65}
 .rep-out.show{display:block}
 .rep-intro{font-size:.85rem;color:var(--muted)}
@@ -401,13 +415,6 @@ body.intro .labcard{animation-delay:2.8s}
 #lc-sign label{display:grid;gap:3px;font-size:.74rem;color:var(--muted);font-weight:600}
 #lc-sign input{font:inherit;font-size:.84rem;padding:9px 12px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.6);color:var(--ink)}
 #lc-sign .cta{padding:10px 16px}
-.lc-who{display:flex;align-items:center;gap:10px}.lc-who small{font-size:.7rem;color:var(--muted)}
-#lc-sign .lc-rem{display:flex;align-items:center;gap:8px;font-weight:500;color:var(--ink);font-size:.8rem}
-#lc-sign .lc-rem input{width:16px;height:16px;padding:0}
-.lc-err{font-size:.76rem;color:var(--bad);background:var(--bad-soft);padding:7px 10px;border-radius:10px}
-.lc-err[hidden]{display:none}
-.shake{animation:shake .35s}
-@keyframes shake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
 .lc-back{justify-self:start;font-size:.78rem}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:300;padding:10px 18px;border-radius:999px;font-size:.85rem;font-weight:600;
   background:var(--act);color:var(--act-ink);box-shadow:0 12px 30px rgba(18,62,36,.3);animation:fabIn .4s cubic-bezier(.2,.8,.2,1)}
@@ -481,7 +488,7 @@ body.intro .labcard{animation-delay:2.8s}
     <div class="hero-txt">
       <span class="eyebrow" id="dash-title">This month at Penrose House</span>
       <h2 class="display"><span class="l1">Waste less.</span><em>share more.</em></h2>
-      <p class="lede">What circularity recovered this month across the building’s labs. Tiered estimates, not weighed values. <span class="ph">Placeholder factors</span></p>
+      <p class="lede">What circularity recovered this month across the building’s labs. Tiered estimates, not weighed values. CO₂e uses DESNZ 2026 factors. <span class="ph">Placeholder costs</span></p>
       <div class="cards impact">
         <div class="stat"><div class="n good" id="s-div">0</div><div class="l">kg diverted via reuse</div></div>
         <div class="stat"><div class="n good" id="s-save">0</div><div class="l">QAR avoided (est.)</div></div>
@@ -587,12 +594,15 @@ body.intro .labcard{animation-delay:2.8s}
 
   <div class="tools">
     <input class="search" id="x-search" type="search" placeholder="Search listings…" aria-label="Search exchange listings">
-    <div class="seg" role="group" aria-label="Layout"><button data-lay="grid" aria-pressed="true" title="Grid view"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></svg>Grid</button><button data-lay="list" aria-pressed="false" title="List view"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/></svg>List</button></div>
+    <div class="seg" id="board-seg" role="group" aria-label="Board"><button data-board="offers" aria-pressed="true">Offers <b id="n-offers">0</b></button><button data-board="wanted" aria-pressed="false">Wanted <b id="n-wanted">0</b></button></div>
+    <div class="seg" id="lay-seg" role="group" aria-label="Layout"><button data-lay="grid" aria-pressed="true" title="Grid view"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></svg>Grid</button><button data-lay="list" aria-pressed="false" title="List view"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/></svg>List</button></div>
     <button class="ghost" id="offer-toggle" aria-expanded="false">+ Offer an item</button>
+    <button class="ghost" id="want-toggle" aria-expanded="false">+ Request an item</button>
   </div>
 
   <form class="offer" id="offer-form" novalidate>
     <h3>Offer an item</h3>
+    <p class="fill-note" id="fill-note"></p>
     <div class="fgrid">
       <label class="full">What is it?<input name="t" required placeholder="e.g. Borosilicate bottles 250 ml, 10 pcs"></label>
       <label>Your name<input name="who" required autocomplete="name" placeholder="e.g. Bryant Montenegro"></label>
@@ -612,8 +622,27 @@ body.intro .labcard{animation-delay:2.8s}
     <button class="cta" type="submit">Post listing</button>
   </form>
 
+  <form class="offer" id="want-form" novalidate>
+    <h3>Request an item</h3>
+    <p class="formnote" style="margin-top:0">Looking for something? Post it here and any lab with spare stock can fill it. It goes through the same custody steps as an offer.</p>
+    <div class="fgrid">
+      <label class="full">What do you need?<input name="t" required placeholder="e.g. Amber glass bottles 250 ml"></label>
+      <div class="full hits want-hits" id="want-hits"></div>
+      <label>Your name<input name="who" required autocomplete="name" placeholder="e.g. Bryant Montenegro"></label>
+      <label>Email or phone<input name="contact" required placeholder="e.g. name@hbku.edu.qa or 4454 0000"></label>
+      <label>Your lab<select name="lab"></select></label>
+      <label>Material stream<select name="stream"></select></label>
+      <label>Quantity<input name="qty" placeholder="e.g. 6 pcs, 1 L, 2 kits"></label>
+      <label>Needed by <em style="font-weight:400;font-style:normal">(optional)</em><input name="by" type="date"></label>
+      <label class="full">Requirements / notes<input name="m" placeholder="e.g. unopened only; rinsed is fine; any brand"></label>
+    </div>
+    <p class="formnote">Requests for opened or hazardous chemicals can only be filled from within your institute and still need EHS approval.</p>
+    <button class="cta" type="submit">Post request</button>
+  </form>
+
   <div id="listings"></div>
-  <p class="note">Every transfer moves through <b>Requested → Approved → Collected</b>, timestamped, so the giving and receiving labs and EHS share one custody record. In this demo you play both sides.</p>
+  <p class="note" id="want-note" hidden>When a lab offers to fill a request, the item is listed and marked <b>Requested</b> on your behalf, then moves through <b>Approved → Collected</b> like any other transfer. The request closes as <b>Fulfilled</b> on collection.</p>
+  <p class="note" id="offer-note">Every transfer moves through <b>Requested → Approved → Collected</b>, timestamped, so the giving and receiving labs and EHS share one custody record. In this demo you play both sides.</p>
 </div>
 
 <!-- GUIDE -->
@@ -621,6 +650,7 @@ body.intro .labcard{animation-delay:2.8s}
   <section class="banner" style="--i:0"><div class="btxt"><h2>Waste sorting guide</h2><p class="lede">What goes in which bin. Search by item or material; every category pairs a colour with a text label, so nothing relies on colour alone.</p></div><div class="bimg" role="img" aria-label="Recycling, compost and landfill bins" style="background-image:url('https://images.unsplash.com/photo-1790579941313-29964bfd626a?ixlib=rb-4.1.0&fm=jpg&crop=entropy&cs=srgb&w=1200&q=80')"></div></section>
   <input class="search" id="g-search" type="search" placeholder="Search: gloves, acetone, batteries, broken glass…" aria-label="Search the sorting guide">
   <div id="g-cards"></div>
+  <p class="note">CO₂e savings per kg: <a href="https://www.gov.uk/government/publications/greenhouse-gas-reporting-conversion-factors-2026" target="_blank" rel="noopener">UK Government GHG Conversion Factors 2026</a> (DESNZ), reuse = new production + landfill avoided, recycling = recycled-content saving + landfill avoided. Chemicals are an estimate. See <button class="linklike" data-go="evidence">How we calculate</button>.</p>
   <p class="note">Printable bin labels with QR codes are available from the pilot coordinator. Biohazard and sharps streams follow institute EHS procedures and are listed here for completeness only.</p>
 </div>
 
@@ -663,30 +693,15 @@ body.intro .labcard{animation-delay:2.8s}
   </section>
 
   <section id="methods">
-    <h3>How we calculate <span class="ph">Placeholder factors</span></h3>
+    <h3>How we calculate <span class="ph">Placeholder costs</span></h3>
     <div class="panel">
       <table>
         <tr><th>Course tool</th><th>How the platform uses it</th></tr>
-        <tr><td><span class="tool-k">Life cycle assessment</span></td><td><b>Functional unit:</b> 1 kg of lab material kept out of disposal. <b>System boundary:</b> the avoided purchase of a new equivalent (cradle-to-gate production) plus the avoided disposal route. CO₂e avoided = Σ kg diverted × material factor (kg CO₂e/kg). Factors are placeholders to be replaced with published values.</td></tr>
+        <tr><td><span class="tool-k">Life cycle assessment</span></td><td><b>Boundary:</b> cradle-to-gate production avoided + disposal avoided; functional unit 1 kg. CO₂e avoided = Σ kg reused × reuse factor (kg CO₂e/kg). Reuse avoids making a new item and landfilling the old one; recycling only avoids part of production, so it carries a smaller factor. Landfill is used as the avoided route because it is the main disposal route in Qatar.<br><small class="src">Source: <a href="https://www.gov.uk/government/publications/greenhouse-gas-reporting-conversion-factors-2026" target="_blank" rel="noopener">UK Government GHG Conversion Factors for Company Reporting 2026</a>, Department for Energy Security and Net Zero (DESNZ), flat file v1.2 (July 2026): “Material use” and “Waste disposal” factors, per tonne ÷ 1000. <span class="ph">Estimate</span> for chemicals, which have no published factor.</small><div class="ftab" id="ev-factors"></div></td></tr>
         <tr><td><span class="tool-k">Circular economy &amp; waste hierarchy</span></td><td>Features follow the hierarchy: <b>prevent</b> (check before you buy, expiry watch), <b>reuse</b> (exchange), <b>recycle</b> (sorting guide, recycling bins), <b>dispose</b> last (tracked bins, EHS pickups). The dashboard bar shows where each month’s kg ended up.</td></tr>
-        <tr><td><span class="tool-k">System dynamics</span></td><td>Adoption is a <b>reinforcing loop</b> (below): more listings → more useful searches → more users → more listings. Seeded listings and expiry alerts get the loop turning; the 30-second QR log keeps the <b>balancing loop</b> of staff time weak.</td></tr>
+        <tr><td><span class="tool-k">System dynamics</span></td><td>Adoption is a <b>reinforcing loop</b>: more listings → more useful searches → more users → more listings. Seeded listings and expiry alerts get the loop turning; the 30-second QR log keeps the <b>balancing loop</b> of staff time weak.</td></tr>
       </table>
-      <svg class="loop" viewBox="0 0 520 200" role="img" aria-label="Reinforcing loop: listings increase useful searches, which increase active users, which increase listings. Balancing loop: logging effort reduces participation." font-family="DM Sans, sans-serif" font-size="12">
-        <defs><marker id="lp" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="currentColor"/></marker></defs>
-        <g style="color:var(--muted)" stroke="currentColor" fill="none" stroke-width="1.6" marker-end="url(#lp)">
-          <path d="M170,52 Q250,20 318,52"/><path d="M340,88 Q330,140 262,152"/><path d="M196,150 Q130,140 140,92"/>
-          <path d="M420,166 Q380,186 300,166"/>
-        </g>
-        <g text-anchor="middle" fill="var(--ink)">
-          <rect x="70" y="52" width="140" height="34" rx="8" fill="var(--card)" stroke="var(--line)"/><text x="140" y="74">Listings</text>
-          <rect x="300" y="52" width="160" height="34" rx="8" fill="var(--card)" stroke="var(--line)"/><text x="380" y="74">Useful searches</text>
-          <rect x="160" y="140" width="140" height="34" rx="8" fill="var(--card)" stroke="var(--line)"/><text x="230" y="162">Active users</text>
-          <rect x="400" y="140" width="112" height="34" rx="8" fill="var(--card)" stroke="var(--line)"/><text x="456" y="162">Logging effort</text>
-        </g>
-        <g font-weight="700" text-anchor="middle"><text x="245" y="30" fill="var(--reuse)">+</text><text x="348" y="128" fill="var(--reuse)">+</text><text x="146" y="128" fill="var(--reuse)">+</text><text x="360" y="192" fill="var(--bad)">–</text>
-          <circle cx="245" cy="104" r="15" fill="var(--reuse)"/><text x="245" y="109" fill="#fff">R</text></g>
-      </svg>
-      <p class="note">Disposal costs (QAR/kg) and emission factors (kg CO₂e/kg) are placeholders. Before roll-out they will be replaced with EHS disposal rates and published conversion factors.</p>
+      <p class="note">Emission factors are published DESNZ 2026 values (UK averages applied to Qatar, so treat totals as indicative); chemicals use an estimate. Disposal costs (QAR/kg) are still placeholders until EHS confirms its rates.</p>
     </div>
   </section>
 
@@ -722,12 +737,11 @@ body.intro .labcard{animation-delay:2.8s}
     </div>
     <form class="lc-step" id="lc-sign" hidden>
       <button type="button" class="linklike lc-back" id="lc-back">← Back</button>
-      <div class="lc-who"><span class="lc-av" id="lc-tav"></span><div><small>Switch to</small><div class="lc-h" id="lc-target"></div></div></div>
-      <label>Lab password<input type="password" id="lc-pw" autocomplete="off" placeholder="Enter this lab’s password"></label>
-      <p class="lc-err" id="lc-err" hidden>That’s not the password for this lab. Check you picked the right one.</p>
-      <label class="lc-rem"><input type="checkbox" checked> Keep this device signed in</label>
-      <button class="cta" type="submit" id="lc-go">Switch lab</button>
-      <p class="lc-note">Demo password for every lab: <b>labloop</b></p>
+      <div class="lc-h">Sign in to <span id="lc-target"></span></div>
+      <label>Lab account<input id="lc-email" readonly></label>
+      <label>Password<input type="password" value="demo-password" readonly></label>
+      <button class="cta" type="submit" id="lc-go">Sign in</button>
+      <p class="lc-note">Pre-filled for the demo.</p>
     </form>
   </div>
   <div class="lc-main">
@@ -761,14 +775,22 @@ body.intro .labcard{animation-delay:2.8s}
 <script>
 "use strict";
 // ---------- seed data (grounded in the 13-lab survey) ----------
-// cost = QAR per kg disposal, co2 = kg CO2e avoided per kg diverted (PLACEHOLDERS)
+// cost = QAR per kg disposal (PLACEHOLDER, awaiting EHS rates)
+// co2Reuse / co2Recycle = kg CO2e avoided per kg, from UK Government GHG Conversion Factors 2026 (DESNZ, flat file v1.2, Jul 2026)
+//   co2Reuse   = Material use "Primary material production" + Waste disposal "Landfill"  (per tonne / 1000)
+//   co2Recycle = (Primary production - "Closed-loop source") + (Landfill - Closed/open-loop recycling)  (per tonne / 1000)
+//   Landfill is the avoided route because most solid waste in Qatar is landfilled.
+//   cons: average plastics (reusable consumables are mostly plastic by mass; C&I waste has no production factor)
+//   ewas: Electrical items - small (production) + WEEE - mixed (disposal); no recycled-content factor is published, so recycling credit is disposal-route only
+//   met:  Metal: scrap metal (DESNZ mixed-metal average) rather than aluminium or steel alone
+//   chem: no published factor -> estimate (est:true)
 const STREAMS=[
-  {id:"cons", name:"General consumables", kg:46, cost:3.0, co2:2.5, cat:"gen", tier:"dispose"},
-  {id:"glass",name:"Glass",               kg:31, cost:1.5, co2:0.9, cat:"rec", tier:"recycle"},
-  {id:"plas", name:"Filament & plastics", kg:18, cost:2.0, co2:2.7, cat:"rec", tier:"recycle"},
-  {id:"ewas", name:"E-waste",             kg:12, cost:4.0, co2:1.6, cat:"ew",  tier:"recycle"},
-  {id:"chem", name:"Solvents & chemicals (track-only)", kg:9, cost:8.0, co2:1.2, cat:"chem", tier:"dispose"},
-  {id:"met",  name:"Metal & electrodes",  kg:8,  cost:1.2, co2:1.8, cat:"rec", tier:"recycle"},
+  {id:"cons", name:"General consumables", kg:46, cost:3.0, co2Reuse:3.18, co2Recycle:1.60, cat:"gen", tier:"dispose"},
+  {id:"glass",name:"Glass",               kg:31, cost:1.5, co2Reuse:1.41, co2Recycle:0.58, cat:"rec", tier:"recycle"},
+  {id:"plas", name:"Filament & plastics", kg:18, cost:2.0, co2Reuse:3.18, co2Recycle:1.60, cat:"rec", tier:"recycle"},
+  {id:"ewas", name:"E-waste",             kg:12, cost:4.0, co2Reuse:5.66, co2Recycle:0.004, cat:"ew",  tier:"recycle", noRecCredit:true},
+  {id:"chem", name:"Solvents & chemicals (track-only)", kg:9, cost:8.0, co2Reuse:1.2, co2Recycle:0, cat:"chem", tier:"dispose", est:true},
+  {id:"met",  name:"Metal & electrodes",  kg:8,  cost:1.2, co2Reuse:3.48, co2Recycle:1.77, cat:"rec", tier:"recycle"},
 ];
 const CAT=c=>`var(--c-${c})`;
 const sById=id=>STREAMS.find(s=>s.id===id);
@@ -781,6 +803,7 @@ const BINS=[
   {code:"PEN-S07", name:"Solvent jerrican", lab:"Chemistry Lab 2", stream:"chem", capKg:20, startKg:15.5},
 ];
 const LABS=["Sustainability Lab 1","Chemistry Lab 2","3D Printing Lab","Electronics Lab","Electrochemistry Lab","Bio Lab 1"];
+const LAB_EMAIL=l=>l.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/-$/,"")+"@labloop.qa";
 const LAB_INIT=l=>({"Sustainability Lab 1":"SL1","Chemistry Lab 2":"CL2","3D Printing Lab":"3D","Electronics Lab":"EL","Electrochemistry Lab":"EC","Bio Lab 1":"BL1"})[l]||l.slice(0,2).toUpperCase();
 const TIERS=[{l:"Small (~0.5 kg)",kg:.5},{l:"Medium (~2 kg)",kg:2},{l:"Large (~5 kg)",kg:5}];
 const SEED_DIVERTED=14;    // kg collected through the exchange earlier this month (seed)
@@ -793,6 +816,13 @@ const SEED_LISTINGS=[
   {who:"Electrochemistry Lab coordinator", contact:"ext. 4387", t:"Steel electrode stock, assorted", m:"Electrochemistry Lab · surplus from completed study", lab:"Electrochemistry Lab", stream:"met", kg:2.5, val:300, haz:false},
   {who:"Chemistry Lab 2 technician", contact:"chem2-lab@example.qa", t:"Isopropanol 1 L, opened (~80%)", m:"Chemistry Lab 2 · certificate of analysis attached", lab:"Chemistry Lab 2", stream:"chem", kg:0.8, val:45, haz:true},
 ];
+const SEED_WANTED=[
+  {who:"Bio Lab 1 technician", contact:"bio1-lab@example.qa", t:"Glass Petri dishes 90 mm, 20+ pcs", m:"Bio Lab 1 · for a teaching practical; must be autoclavable", lab:"Bio Lab 1", stream:"glass", qty:"20–30 pcs", inDays:14},
+  {who:"Electronics Lab coordinator", contact:"ext. 4392", t:"Breadboards & jumper wire kits", m:"Electronics Lab · student prototyping; used is fine", lab:"Electronics Lab", stream:"ewas", qty:"4 kits", inDays:30},
+  {who:"Sustainability Lab 1 manager", contact:"ext. 4410", t:"Amber reagent bottles 250 ml", m:"Sustainability Lab 1 · light-sensitive samples; rinsed is fine", lab:"Sustainability Lab 1", stream:"glass", qty:"6 pcs", inDays:null},
+];
+const WSTAGES=["Open","Matched","Fulfilled"];
+const seedWanted=()=>SEED_WANTED.map(({inDays,...x},i)=>({...x,seed:true,id:"W"+(i+1),by:inDays==null?"":new Date(Date.now()+inDays*864e5).toISOString().slice(0,10),status:0,times:{}}));
 const SEED_EXPIRY=[
   {n:"Silver conductive paste 100 g", lab:"Electronics Lab", days:9, val:420, kg:0.1, stream:"chem"},
   {n:"Acetone 2.5 L", lab:"Chemistry Lab 2", days:21, val:95, kg:2, stream:"chem"},
@@ -801,10 +831,10 @@ const SEED_EXPIRY=[
   {n:"Epoxy resin 1 kg", lab:"3D Printing Lab", days:140, val:0, kg:1, stream:"chem"},
 ];
 const GUIDE=[
-  {cat:"Recyclables", c:"rec", bin:"Blue recycling streams: PEN-G12 (glass), PEN-F01 (plastics & filament)", ex:"Clean glass bottles, rinsed plastic containers, filament offcuts, paper and card, metal cans and electrode stock", no:"No contaminated containers; broken glass goes to sharps-safe disposal, never loose in a bag"},
-  {cat:"General consumables", c:"gen", bin:"Grey general bin: PEN-C04", ex:"Gloves, wipes, uncontaminated packaging, empty pipette tip boxes", no:"Nothing chemically or biologically contaminated; no sharps"},
-  {cat:"Chemical waste", c:"chem", bin:"Orange-labelled jerricans: PEN-S07, segregated by compatibility", ex:"Spent solvents, expired reagents, rinse water from first washes", no:"Never mix incompatible classes; no unlabelled containers; log every addition via the QR code"},
-  {cat:"E-waste", c:"ew", bin:"Purple e-waste crate: PEN-E02", ex:"Circuit boards, cables, batteries with taped terminals, small instruments", no:"No loose lithium batteries; wipe or remove data storage first"},
+  {cat:"Recyclables", c:"rec", co2:["glass","plas","met"], bin:"Blue recycling streams: PEN-G12 (glass), PEN-F01 (plastics & filament)", ex:"Clean glass bottles, rinsed plastic containers, filament offcuts, paper and card, metal cans and electrode stock", no:"No contaminated containers; broken glass goes to sharps-safe disposal, never loose in a bag"},
+  {cat:"General consumables", c:"gen", co2:["cons"], bin:"Grey general bin: PEN-C04", ex:"Gloves, wipes, uncontaminated packaging, empty pipette tip boxes", no:"Nothing chemically or biologically contaminated; no sharps"},
+  {cat:"Chemical waste", c:"chem", co2:["chem"], bin:"Orange-labelled jerricans: PEN-S07, segregated by compatibility", ex:"Spent solvents, expired reagents, rinse water from first washes", no:"Never mix incompatible classes; no unlabelled containers; log every addition via the QR code"},
+  {cat:"E-waste", c:"ew", co2:["ewas"], bin:"Purple e-waste crate: PEN-E02", ex:"Circuit boards, cables, batteries with taped terminals, small instruments", no:"No loose lithium batteries; wipe or remove data storage first"},
   {cat:"Biological / biohazard", c:"bio", bin:"Red biohazard containers, EHS collection only", ex:"Cultures, contaminated consumables, biological samples", no:"Not handled through this platform; follow your institute’s EHS procedure"},
   {cat:"Sharps", c:"sharp", bin:"Yellow sharps containers, EHS collection only", ex:"Needles, blades, broken glass, pipette tips with residue", no:"Never into general or recycling bins; never fill past the marked line"},
 ];
@@ -825,6 +855,8 @@ function fresh(){
     logs:[],
     listings:SEED_LISTINGS.map((x,i)=>({...x,seed:true,id:"L"+(i+1),stage:0,times:{}})),
     expiry:SEED_EXPIRY.map(x=>({...x,listed:false})),
+    wanted:seedWanted(),
+    nextWid:SEED_WANTED.length+1,
     pickups:{},
     lab:"Sustainability Lab 1",
     nextId:SEED_LISTINGS.length+1
@@ -834,6 +866,7 @@ let S;
 try{S=JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){S=null}
 if(!S||!S.listings)S=fresh();
 if(!S.lab)S.lab="Sustainability Lab 1";
+if(!S.wanted){S.wanted=seedWanted();S.nextWid=SEED_WANTED.length+1;}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 const STAGES=["Available","Requested","Approved","Collected"];
 
@@ -844,8 +877,8 @@ function totals(){
   for(const l of S.logs){const s=sById(l.stream);if(s){kg+=l.kg;cost+=l.kg*s.cost;}}
   const coll=S.listings.filter(x=>x.stage===3);
   const divKg=SEED_DIVERTED+coll.reduce((a,x)=>a+x.kg,0);
-  // CO2e avoided: kg diverted x material factor (avoided new production + disposal)
-  const co2=SEED_DIVERTED*sById(SEED_DIV_STREAM).co2+coll.reduce((a,x)=>a+x.kg*sById(x.stream).co2,0);
+  // CO2e avoided: kg reused through the exchange x co2Reuse (avoided new production + avoided landfill)
+  const co2=SEED_DIVERTED*sById(SEED_DIV_STREAM).co2Reuse+coll.reduce((a,x)=>a+x.kg*sById(x.stream).co2Reuse,0);
   // QAR avoided: disposal fees not paid + replacement value of purchases avoided
   const save=SEED_DIVERTED*sById(SEED_DIV_STREAM).cost+SEED_PROCURED+coll.reduce((a,x)=>a+x.kg*sById(x.stream).cost+(+x.val||0),0);
   return {kg,cost,co2,save:Math.round(save),divKg};
@@ -944,33 +977,71 @@ const STREAM_ICON={
 function contactHTML(x){
   if(!x.who&&!x.contact)return "";
   const c=x.contact||"",link=/@/.test(c)?`<a href="mailto:${esc(c)}">${esc(c)}</a>`:/^[+\d][\d\s-]{5,}$/.test(c)?`<a href="tel:${esc(c.replace(/\s/g,""))}">${esc(c)}</a>`:esc(c);
-  return `<div class="contact"><span class="who"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Listed by <b>${esc(x.who||"")}</b>${c?" · "+link:""}</span>${x.seed?'<span class="ph">Placeholder contact</span>':""}</div>`;
+  return `<div class="contact"><span class="who"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>${x.status!==undefined?"Requested":"Listed"} by <b>${esc(x.who||"")}</b>${c?" · "+link:""}</span>${x.seed?'<span class="ph">Placeholder contact</span>':""}</div>`;
 }
 function listingHTML(x){
   const s=sById(x.stream);
   const chips=[`<span class="chip val">Replaces ~QAR ${esc(x.val||0)} new</span>`,`<span class="chip">${fmt(x.kg)} kg · ${esc(s.name.replace(" (track-only)",""))}</span>`,
+    ...(x.forReq?[`<span class="chip ok">Fills a request</span>`]:[]),
     x.haz?`<span class="chip warn">Internal transfer only</span><span class="chip warn">EHS approval required</span>`:`<span class="chip ok">Non-hazardous</span>`];
   const stages=STAGES.map((n,i)=>`<span class="stg ${x.stage>=i?"on":""}">${n}${i>0&&x.times[i]?`<small>${esc(x.times[i])}</small>`:""}</span>`).join("");
   const pic=x.photo?`<div class="pic" style="--pc:${PIC_C[x.stream]||CAT(s.cat)}"><img src="${x.photo}" alt="Photo of ${esc(x.t)}" loading="lazy"></div>`
     :`<div class="pic" style="--pc:${PIC_C[x.stream]||CAT(s.cat)}" role="img" aria-label="No photo yet">${STREAM_ICON[x.stream]||STREAM_ICON.cons}<span class="ph">Photo placeholder</span></div>`;
-  return `<div class="listing" style="--i:${Math.min(listingHTML.n=(listingHTML.n||0)+1,8)}">${pic}<div class="lb"><div class="t">${esc(x.t)}</div><div class="m">${esc(x.m)}</div>
+  return `<div class="listing" id="lst-${x.id}" style="--i:${Math.min(listingHTML.n=(listingHTML.n||0)+1,8)}">${pic}<div class="lb"><div class="t">${esc(x.t)}</div><div class="m">${esc(x.m)}</div>
     ${contactHTML(x)}<div class="foot">${chips.join("")}${stageBtn(x)}</div><div class="stages">${stages}</div></div></div>`;
+}
+const fmtDate=d=>new Date(d+"T00:00").toLocaleDateString("en-GB",{day:"numeric",month:"short"});
+function wantedHTML(x){
+  const s=sById(x.stream),days=x.by?Math.ceil((new Date(x.by+"T23:59")-NOW)/864e5):null;
+  const due=x.by&&x.status<2?`<span class="chip ${days<0?"bad":days<=7?"warn":""}">${days<0?"Past due ":"Needed by "}${esc(fmtDate(x.by))}</span>`:"";
+  const chips=[`<span class="chip">${x.qty?esc(x.qty)+" · ":""}${esc(s.name.replace(" (track-only)",""))}</span>`,due];
+  const lst=x.lid&&S.listings.find(l=>l.id===x.lid);
+  const act=x.status===0?`<button class="req" data-fill="${x.id}">I can fill this</button>`
+    :x.status===1?`<button class="req" data-view="${x.lid}">View offer</button>`:`<button class="req" disabled>Fulfilled ✓</button>`;
+  const match=lst?`<div class="m">Offered by <b>${esc(lst.who||lst.lab)}</b> · ${esc(lst.lab)} · custody: ${STAGES[lst.stage]}</div>`:"";
+  const stages=WSTAGES.map((n,i)=>`<span class="stg ${x.status>=i?"on":""}">${n}${i>0&&x.times[i]?`<small>${esc(x.times[i])}</small>`:""}</span>`).join("");
+  return `<div class="listing want" id="lst-${x.id}" style="--i:${Math.min(listingHTML.n=(listingHTML.n||0)+1,8)}"><div class="pic" style="--pc:${PIC_C[x.stream]||CAT(s.cat)}" role="img" aria-label="Requested item">${STREAM_ICON[x.stream]||STREAM_ICON.cons}<span class="ph" style="background:var(--reuse-soft);color:var(--reuse);border-color:color-mix(in srgb,var(--reuse) 45%,transparent)">Wanted</span></div>
+    <div class="lb"><div class="t">${esc(x.t)}</div><div class="m">${esc(x.m)}</div>${match}
+    ${contactHTML(x)}<div class="foot">${chips.join("")}${act}</div><div class="stages">${stages}</div></div></div>`;
+}
+let BOARD=(()=>{try{return localStorage.getItem("labloop-board")||"offers"}catch(e){return "offers"}})();
+function setBoard(b){
+  BOARD=b;try{localStorage.setItem("labloop-board",b)}catch(e){}
+  document.querySelectorAll("#board-seg button").forEach(x=>x.setAttribute("aria-pressed",String(x.dataset.board===b)));
+  document.getElementById("x-search").placeholder=b==="wanted"?"Search requests…":"Search listings…";
+  document.getElementById("want-note").hidden=b!=="wanted";document.getElementById("offer-note").hidden=b==="wanted";
+  renderExchange();
 }
 function renderExchange(){
   const q=(document.getElementById("x-search").value||"").toLowerCase();
-  const list=S.listings.filter(x=>!q||(x.t+" "+x.m+" "+x.lab+" "+sById(x.stream).name).toLowerCase().includes(q));
+  const src=BOARD==="wanted"?S.wanted:S.listings;
+  const list=src.filter(x=>!q||(x.t+" "+x.m+" "+x.lab+" "+sById(x.stream).name).toLowerCase().includes(q));
   listingHTML.n=0;
+  document.getElementById("n-offers").textContent=S.listings.filter(x=>x.stage<3).length;
+  document.getElementById("n-wanted").textContent=S.wanted.filter(x=>x.status===0).length;
   document.getElementById("listings").classList.toggle("grid",LAYOUT==="grid");
-  document.getElementById("listings").innerHTML=list.map(listingHTML).join("")||`<p class="note">No listings match.</p>`;
+  document.getElementById("listings").innerHTML=list.map(BOARD==="wanted"?wantedHTML:listingHTML).join("")||`<p class="note">${BOARD==="wanted"?"No requests match.":"No listings match."}</p>`;
+}
+function offerHits(q,from){
+  const words=q.split(/\s+/).filter(w=>w.length>2);
+  return S.listings.filter(x=>x.stage<3&&words.some(w=>(x.t+" "+x.m+" "+sById(x.stream).name).toLowerCase().includes(w)))
+    .map(x=>`<div class="hit"><div class="ht"><b>${esc(x.t)}</b><small>${esc(x.lab)} · ${fmt(x.kg)} kg · saves ~QAR ${esc(x.val||0)} · ${STAGES[x.stage]}</small></div>${x.stage===0?`<button class="req" data-a="req" data-id="${x.id}" data-from="${from}">Request instead of buying</button>`:`<span class="chip">${STAGES[x.stage]}</span>`}</div>`);
 }
 function renderBuy(){
   const q=(document.getElementById("buy-search").value||"").trim().toLowerCase();
   const el=document.getElementById("buy-hits");
   if(q.length<2){el.innerHTML="";return;}
-  const words=q.split(/\s+/);
-  const hits=S.listings.filter(x=>x.stage<3&&words.some(w=>(x.t+" "+x.m+" "+sById(x.stream).name).toLowerCase().includes(w)));
-  el.innerHTML=hits.length?hits.map(x=>`<div class="hit"><div class="ht"><b>${esc(x.t)}</b><small>${esc(x.lab)} · ${fmt(x.kg)} kg · saves ~QAR ${esc(x.val||0)} · ${STAGES[x.stage]}</small></div>${x.stage===0?`<button class="req" data-a="req" data-id="${x.id}" data-from="buy">Request instead of buying</button>`:`<span class="chip">${STAGES[x.stage]}</span>`}</div>`).join("")
-    :`<p class="note" style="margin:0">Nothing on the exchange matches “${esc(q)}”. Buy new, and offer any surplus here when your project ends.</p>`;
+  const hits=offerHits(q,"buy");
+  el.innerHTML=hits.length?hits.join("")
+    :`<div class="hit"><div class="ht"><b>Nothing on the exchange matches “${esc(q)}”.</b><small>Post a request so a lab with spare stock can offer it before you buy new.</small></div><button class="req" data-wantq="${esc(q)}">Post a request</button></div>`;
+}
+const kgf=v=>v.toFixed(2);
+const recTxt=s=>s.id==="chem"?"Recycling: n/a":s.noRecCredit?"Recycling: no published credit":"Recycling saves ~"+kgf(s.co2Recycle);
+function co2Line(g){
+  if(!g.co2)return "";
+  const ss=g.co2.map(sById);
+  if(ss.length===1){const s=ss[0];return `<div class="co2"><span>Reuse saves ~${kgf(s.co2Reuse)} kg CO₂e per kg · ${recTxt(s)}</span>${s.est?'<span class="ph">Estimate</span>':""}</div>`;}
+  return `<div class="co2">${ss.map(s=>`<span>${s.name.replace("Filament & plastics","Plastics").replace("Metal & electrodes","Metal")}: reuse ~${kgf(s.co2Reuse)} · recycling ~${kgf(s.co2Recycle)}</span>`).join("")}<span style="color:var(--muted)">kg CO₂e per kg</span></div>`;
 }
 function renderGuide(q){
   q=(q||"").toLowerCase();
@@ -980,10 +1051,11 @@ function renderGuide(q){
       <div class="t"><span class="dot" style="background:${CAT(g.c)}"></span>${g.cat}</div>
       <div class="bin-line"><b>Where:</b> ${g.bin}</div>
       <div class="ex"><b>Examples:</b> ${g.ex}</div>
-      <div class="no"><b>Don’t:</b> ${g.no}</div>
+      <div class="no"><b>Don’t:</b> ${g.no}</div>${co2Line(g)}
     </div>`).join("")||`<p class="note">No match. Try a material name, or ask the pilot coordinator.</p>`;
 }
 function renderEvidence(){
+  document.getElementById("ev-factors").innerHTML=`<b>kg CO₂e per kg</b><b>Reuse</b><b>Recycle</b>`+STREAMS.map(s=>`<span>${s.name.replace(" (track-only)","")}${s.est?' <span class="ph">Estimate</span>':""}</span><span>${kgf(s.co2Reuse)}</span><span>${s.id==="chem"?"n/a":s.noRecCredit?"~0":kgf(s.co2Recycle)}</span>`).join("");
   const EV_TRACK=[["Paper logs / binders",5],["No formal system",3],["Excel / spreadsheets",2],["Institutional EHS software",3]];
   const EV_FEAT=[["Waste & cost dashboard",9],["Surplus networking portal",8],["Expiry alerts",5],["EHS reporting tools",1]];
   const EV_WASTE=[["General consumables",8],["Hazardous / expired chemicals",5],["E-waste",3],["Surplus open chemicals",2],["3D filament & plastics",2],["Glass, metal, powders",3]];
@@ -1142,20 +1214,23 @@ function advance(id,action){
   const x=S.listings.find(l=>l.id===id);if(!x)return;
   const want={req:0,app:1,col:2}[action];
   if(x.stage!==want)return;
-  x.stage++;x.times[x.stage]=stamp();save();renderAll();
+  x.stage++;x.times[x.stage]=stamp();
+  if(x.stage===3&&x.forReq){const r=S.wanted.find(w=>w.id===x.forReq);if(r){r.status=2;r.times[2]=x.times[3];}}
+  save();renderAll();
 }
 document.addEventListener("click",e=>{
   const b=e.target.closest("button[data-a]");if(!b)return;
   advance(b.dataset.id,b.dataset.a);
-  if(b.dataset.from==="buy")show("exchange");
+  if(b.dataset.from==="buy"){show("exchange");setBoard("offers");}
+  if(b.dataset.from==="want"){wform.reset();document.getElementById("want-hits").innerHTML="";openForm(wform,wtog,false);setBoard("offers");}
 });
 document.getElementById("x-search").addEventListener("input",renderExchange);
 document.getElementById("buy-search").addEventListener("input",renderBuy);
 let LAYOUT=(()=>{try{return localStorage.getItem("labloop-layout")||"grid"}catch(e){return "grid"}})();
-document.querySelectorAll(".seg button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lay===LAYOUT)));
-document.querySelector(".seg").addEventListener("click",e=>{const b=e.target.closest("button[data-lay]");if(!b)return;LAYOUT=b.dataset.lay;
+document.querySelectorAll("#lay-seg button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lay===LAYOUT)));
+document.getElementById("lay-seg").addEventListener("click",e=>{const b=e.target.closest("button[data-lay]");if(!b)return;LAYOUT=b.dataset.lay;
   try{localStorage.setItem("labloop-layout",LAYOUT)}catch(err){}
-  document.querySelectorAll(".seg button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));renderExchange();enter(document.getElementById("v-exchange"));});
+  document.querySelectorAll("#lay-seg button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));renderExchange();enter(document.getElementById("v-exchange"));});
 let pendingPhoto=null;
 const drop=document.getElementById("drop"),dropIn=document.getElementById("drop-in"),DROP_EMPTY=dropIn.innerHTML;
 function resetDrop(){pendingPhoto=null;drop.classList.remove("has");dropIn.innerHTML=DROP_EMPTY;}
@@ -1172,7 +1247,56 @@ document.getElementById("photo-in").addEventListener("change",e=>{
 const form=document.getElementById("offer-form"),tog=document.getElementById("offer-toggle");
 form.lab.innerHTML=LABS.map(l=>`<option>${l}</option>`).join("");
 form.stream.innerHTML=STREAMS.map(s=>`<option value="${s.id}">${s.name}</option>`).join("");
-tog.addEventListener("click",()=>{const on=!form.classList.contains("show");form.classList.toggle("show",on);tog.setAttribute("aria-expanded",String(on));if(on)form.t.focus();});
+const wform=document.getElementById("want-form"),wtog=document.getElementById("want-toggle"),fillNote=document.getElementById("fill-note");
+wform.lab.innerHTML=form.lab.innerHTML;wform.stream.innerHTML=form.stream.innerHTML;
+let fillReq=null;
+function clearFill(){fillReq=null;fillNote.className="fill-note";fillNote.innerHTML="";}
+function openForm(f,t,on){
+  [[form,tog],[wform,wtog]].forEach(([F,T])=>{const o=F===f&&on;F.classList.toggle("show",o);T.setAttribute("aria-expanded",String(o));});
+  if(on){f.lab.value=S.lab;f.t.focus();}
+}
+tog.addEventListener("click",()=>{clearFill();openForm(form,tog,!form.classList.contains("show"));});
+wtog.addEventListener("click",()=>openForm(wform,wtog,!wform.classList.contains("show")));
+function startFill(id){
+  const r=S.wanted.find(w=>w.id===id);if(!r||r.status!==0)return;
+  form.reset();resetDrop();openForm(form,tog,true);
+  fillReq=id;form.t.value=r.t;form.stream.value=r.stream;form.haz.checked=r.stream==="chem";
+  if(r.lab!==S.lab)form.lab.value=LABS.find(l=>l!==r.lab)||S.lab;
+  fillNote.className="fill-note show";
+  fillNote.innerHTML=`<span>Filling <b>${esc(r.lab)}</b>’s request${r.qty?" for "+esc(r.qty):""}. Your listing will be marked <b>Requested</b> by them straight away.</span><button type="button" class="linklike" id="fill-cancel">Cancel</button>`;
+  form.scrollIntoView({behavior:"smooth",block:"start"});setTimeout(()=>form.t.select(),50);
+}
+function openWant(q){
+  show("exchange");setBoard("wanted");wform.reset();openForm(wform,wtog,true);wform.t.value=q||"";renderWantHits();
+}
+function renderWantHits(){
+  const q=wform.t.value.trim().toLowerCase(),el=document.getElementById("want-hits");
+  const hits=q.length>2?offerHits(q,"want"):[];
+  el.innerHTML=hits.length?`<p class="formnote" style="margin:0"><b>Already on the exchange</b>, you may not need to post:</p>`+hits.join(""):"";
+}
+wform.t.addEventListener("input",renderWantHits);
+document.addEventListener("click",e=>{
+  const f=e.target.closest("[data-fill]");if(f){startFill(f.dataset.fill);return;}
+  if(e.target.closest("#fill-cancel")){clearFill();openForm(form,tog,false);return;}
+  const w=e.target.closest("[data-wantq]");if(w){openWant(w.dataset.wantq);return;}
+  const v=e.target.closest("[data-view]");if(v){
+    document.getElementById("x-search").value="";setBoard("offers");
+    const el=document.getElementById("lst-"+v.dataset.view);
+    if(el){el.scrollIntoView({behavior:"smooth",block:"center"});el.classList.add("flash");setTimeout(()=>el.classList.remove("flash"),1600);}
+  }
+});
+document.getElementById("board-seg").addEventListener("click",e=>{const b=e.target.closest("button[data-board]");if(!b)return;
+  document.getElementById("x-search").value="";setBoard(b.dataset.board);enter(document.getElementById("v-exchange"));});
+wform.addEventListener("submit",e=>{
+  e.preventDefault();
+  const t=wform.t.value.trim(),who=wform.who.value.trim(),contact=wform.contact.value.trim();
+  if(!t){wform.t.focus();return;}
+  if(!who){wform.who.focus();return;}
+  if(!contact){wform.contact.focus();return;}
+  S.wanted.unshift({id:"W"+(S.nextWid++),t,m:wform.lab.value+(wform.m.value.trim()?" · "+wform.m.value.trim():""),lab:wform.lab.value,who,contact,stream:wform.stream.value,qty:wform.qty.value.trim(),by:wform.by.value,status:0,times:{}});
+  save();wform.reset();document.getElementById("want-hits").innerHTML="";openForm(wform,wtog,false);
+  document.getElementById("x-search").value="";setBoard("wanted");renderAll();
+});
 form.stream.addEventListener("change",()=>{if(form.stream.value==="chem")form.haz.checked=true;});
 form.addEventListener("submit",e=>{
   e.preventDefault();
@@ -1183,9 +1307,12 @@ form.addEventListener("submit",e=>{
   if(!who){form.who.focus();return;}
   if(!contact){form.contact.focus();return;}
   const haz=form.haz.checked||form.stream.value==="chem";
-  S.listings.unshift({id:"L"+(S.nextId++),t,m:form.lab.value+(form.m.value.trim()?" · "+form.m.value.trim():""),lab:form.lab.value,who,contact,photo:pendingPhoto,stream:form.stream.value,kg,val:Math.max(0,parseFloat(form.val.value)||0),haz,stage:0,times:{}});
-  save();form.reset();resetDrop();form.classList.remove("show");tog.setAttribute("aria-expanded","false");
-  document.getElementById("x-search").value="";renderAll();
+  const r=fillReq&&S.wanted.find(w=>w.id===fillReq&&w.status===0);
+  const l={id:"L"+(S.nextId++),t,m:form.lab.value+(form.m.value.trim()?" · "+form.m.value.trim():""),lab:form.lab.value,who,contact,photo:pendingPhoto,stream:form.stream.value,kg,val:Math.max(0,parseFloat(form.val.value)||0),haz,stage:0,times:{}};
+  if(r){l.forReq=r.id;l.stage=1;l.times[1]=stamp();r.status=1;r.times[1]=l.times[1];r.lid=l.id;}
+  S.listings.unshift(l);
+  save();form.reset();resetDrop();clearFill();openForm(form,tog,false);
+  document.getElementById("x-search").value="";setBoard("offers");renderAll();
 });
 
 // ---------- expiry / pickups ----------
@@ -1219,12 +1346,13 @@ function reportData(){
     totalKg:Math.round(t.kg),estDisposalQAR:Math.round(t.cost),divertedKg:+fmt(t.divKg),avoidedQAR:t.save,co2eAvoidedKg:Math.round(t.co2),
     byStream:STREAMS.map(s=>({stream:s.name,kg:Math.round(streamKg(s.id))})),
     expiry:S.expiry.map(x=>({item:x.n,daysToExpiry:x.days,offeredOnExchange:x.listed})),
-    exchange:S.listings.map(l=>({item:l.t,stage:STAGES[l.stage],kg:l.kg,replacesQAR:l.val}))};
+    exchange:S.listings.map(l=>({item:l.t,stage:STAGES[l.stage],kg:l.kg,replacesQAR:l.val})),
+    requests:S.wanted.map(w=>({item:w.t,lab:w.lab,status:WSTAGES[w.status]}))};
 }
 function fallbackReport(d){
   const top=[...d.byStream].sort((a,b)=>b.kg-a.kg)[0];
   const exp=d.expiry.filter(x=>x.daysToExpiry>0&&x.daysToExpiry<=60&&!x.offeredOnExchange).map(x=>x.item).join(", ")||"none";
-  return `${d.month} waste report, Penrose House\n\nCircular activity diverted ${d.divertedKg} kg from disposal, avoiding roughly QAR ${d.avoidedQAR} in combined disposal and procurement spend and an estimated ${d.co2eAvoidedKg} kg CO2e. Labs logged ${d.totalKg} kg of waste, with ${top.stream.toLowerCase()} the largest stream at ${top.kg} kg; estimated disposal cost is QAR ${d.estDisposalQAR}.\n\nItems inside the 60-day expiry window not yet offered: ${exp}.\n\nRecommendations:\n1. Offer items inside the 60-day expiry window on the exchange while still viable.\n2. Check the exchange before purchasing; every listed item collected is a purchase avoided.\n3. Review procurement for the largest stream (${top.stream.toLowerCase()}); prevention beats reuse.\n\n(Figures use placeholder cost and emission factors.)`;
+  return `${d.month} waste report, Penrose House\n\nCircular activity diverted ${d.divertedKg} kg from disposal, avoiding roughly QAR ${d.avoidedQAR} in combined disposal and procurement spend and an estimated ${d.co2eAvoidedKg} kg CO2e. Labs logged ${d.totalKg} kg of waste, with ${top.stream.toLowerCase()} the largest stream at ${top.kg} kg; estimated disposal cost is QAR ${d.estDisposalQAR}.\n\nItems inside the 60-day expiry window not yet offered: ${exp}.\n\nRecommendations:\n1. Offer items inside the 60-day expiry window on the exchange while still viable.\n2. Check the exchange before purchasing; every listed item collected is a purchase avoided.\n3. Review procurement for the largest stream (${top.stream.toLowerCase()}); prevention beats reuse.\n\n(CO2e uses UK DESNZ 2026 conversion factors, chemicals estimated; disposal costs are placeholders.)`;
 }
 document.getElementById("rep-btn").addEventListener("click",async()=>{
   const out=document.getElementById("rep-out");
@@ -1232,7 +1360,7 @@ document.getElementById("rep-btn").addEventListener("click",async()=>{
   const d=reportData();
   if(sampleNS){
     try{
-      await sampleNS("You draft the monthly waste report for LabLoop, a lab waste tracking and reuse platform piloted at Penrose House. Data (tiered estimates, placeholder cost and emission factors): "+JSON.stringify(d)+"\nWrite plain text, no markdown, about 170 words: two short paragraphs leading with what was diverted and saved, then quantities, costs and anything notable in expiries or the exchange, then exactly three numbered recommendations grounded in the data. Note that factors are placeholders. Direct, professional tone.",{onText:({text})=>{if(text)out.textContent=text;}});
+      await sampleNS("You draft the monthly waste report for LabLoop, a lab waste tracking and reuse platform piloted at Penrose House. Data (tiered estimates; CO2e from UK DESNZ 2026 conversion factors with chemicals estimated; disposal costs are placeholders): "+JSON.stringify(d)+"\nWrite plain text, no markdown, about 170 words: two short paragraphs leading with what was diverted and saved, then quantities, costs and anything notable in expiries or the exchange, then exactly three numbered recommendations grounded in the data. Note that disposal costs are placeholders and CO2e uses UK DESNZ 2026 factors. Direct, professional tone.",{onText:({text})=>{if(text)out.textContent=text;}});
       return;
     }catch(e){}
   }
@@ -1259,7 +1387,7 @@ if(h.startsWith("log-")){
   if(i>=0)document.querySelector('#opt-bin button[data-i="'+i+'"]').click();
 }else if(["dashboard","log","exchange","guide","evidence"].includes(h))show(h);
 
-renderEvidence();renderGuide("");renderAll();renderSim();
+renderEvidence();renderGuide("");setBoard(BOARD);renderAll();renderSim();
 // ---------- lab account (simulated sign-in) ----------
 const lcPop=document.getElementById("lc-pop"),lcBtn=document.getElementById("lc-btn");
 function renderLab(){
@@ -1273,17 +1401,14 @@ lcBtn.addEventListener("click",()=>openPop(lcPop.hidden));
 document.getElementById("lc-labs").addEventListener("click",e=>{
   const b=e.target.closest("[data-lab]");if(!b)return;
   if(b.dataset.lab===S.lab){openPop(false);return;}
-  document.getElementById("lc-target").textContent=b.dataset.lab;document.getElementById("lc-tav").textContent=LAB_INIT(b.dataset.lab);
-  const pw=document.getElementById("lc-pw");pw.value="";document.getElementById("lc-err").hidden=true;setTimeout(()=>pw.focus(),30);
+  document.getElementById("lc-target").textContent=b.dataset.lab;document.getElementById("lc-email").value=LAB_EMAIL(b.dataset.lab);
   document.getElementById("lc-sign").dataset.lab=b.dataset.lab;
   document.getElementById("lc-list").hidden=true;document.getElementById("lc-sign").hidden=false;
 });
 document.getElementById("lc-back").addEventListener("click",()=>openPop(true));
 document.getElementById("lc-sign").addEventListener("submit",e=>{
-  e.preventDefault();const go=document.getElementById("lc-go"),pw=document.getElementById("lc-pw"),err=document.getElementById("lc-err");
-  if(pw.value.trim().toLowerCase()!=="labloop"){err.hidden=false;pw.classList.remove("shake");void pw.offsetWidth;pw.classList.add("shake");pw.select();return;}
-  err.hidden=true;go.disabled=true;go.textContent="Switching…";
-  setTimeout(()=>{S.lab=e.target.dataset.lab;save();go.disabled=false;go.textContent="Switch lab";openPop(false);renderLab();renderAll();renderSim();toast("Signed in as "+S.lab);},650);
+  e.preventDefault();const go=document.getElementById("lc-go");go.disabled=true;go.textContent="Signing in…";
+  setTimeout(()=>{S.lab=e.target.dataset.lab;save();go.disabled=false;go.textContent="Sign in";openPop(false);renderLab();renderAll();renderSim();toast("Signed in as "+S.lab);},650);
 });
 document.addEventListener("click",e=>{if(!lcPop.hidden&&!e.target.closest("#labcard"))openPop(false);});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!lcPop.hidden)openPop(false);});
